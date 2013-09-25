@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CocktailBar</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="send_">Send!</string>
+    <string name="title_activity_selection">Selection</string>
+    <string name="select_cocktail">Select Cocktail</string>
+    <string name="select">Select</string>
+    <string name="title_activity_cocktail_details">CocktailDetails</string>
+    <string name="name">Name</string>
+    <string name="cocktail_finished">Cocktail finished</string>
+    <string name="cocktail_ready">Cocktail ready</string>
+    <string name="cocktail_description">Cocktail description</string>
+    <string name="logo_of_the_cocktail">logo of the cocktail</string>
+
+</resources>
