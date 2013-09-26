@@ -14,5 +14,9 @@
     <string name="cocktail_ready">Cocktail ready</string>
     <string name="cocktail_description">Cocktail description</string>
     <string name="logo_of_the_cocktail">logo of the cocktail</string>
+    <string name="cocktail_history">Cocktail History</string>
+    <string name="go_back">Go Back</string>
+    <string name="there_are_no_cocktails_to_make">There are no Cocktails to make</string>
+    <string name="pricture_for_empty_list">pricture for empty list</string>
 
 </resources>

@@ -9,6 +9,7 @@
         android:targetSdkVersion="18" />
 
     <application
+        android:screenOrientation="portrait"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -31,11 +32,11 @@
                 android:value="com.venezilu.barkeeper.MainActivity" />
         </activity>
         <activity
-            android:name="com.venezilu.barkeeper.CocktailDetails"
+            android:name="com.venezilu.barkeeper.CocktailDetailsActivity"
             android:label="@string/title_activity_cocktail_details" >
         </activity>
         <activity
-            android:name="com.venezilu.barkeeper.Selection"
+            android:name="com.venezilu.barkeeper.CocktailSelectionActivity"
             android:label="@string/title_activity_selection" >
         </activity>
     </application>

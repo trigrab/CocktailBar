@@ -9,10 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class CocktailDetails extends Activity {
+public class CocktailDetailsActivity extends Activity {
 
-	private static final String COCKTAIL_DETAILS_NAME = "com.example.cocktailbar.cocktailName";
+	private static final String COCKTAIL_DETAILS = "com.example.cocktailbar.cocktailDetails";
 	private ImageView mPicture;
+	private int mCocktailPosition;
 	private TextView mName;
 	private TextView mDescription;
 	
@@ -21,19 +22,19 @@ public class CocktailDetails extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cocktail_details);
 		
+		
+		
 		// Initialize View
 		mPicture = (ImageView) findViewById(R.id.cocktailLogo);
 		mName = (TextView) findViewById(R.id.cocktailName);
 		mDescription = (TextView) findViewById(R.id.cocktailDescription);
-		mPicture.setImageResource(R.drawable.vodka_martini);
+		
 		Intent intent = getIntent();
-		mName.setText(intent.getExtras().get(COCKTAIL_DETAILS_NAME).toString());
-		if (mName.getText().equals("Pina Colada")){
-			mDescription.setText("3cl white rum\n" + "3cl cream of coconut\n" + "9cl pineapple juice\n");
-		}
-		else if (mName.getText() == "Caipirinha"){
-			mDescription.setText("5cl cachaça\n" + "1/2 Lime cut into 4 wedges\n" + "2 teaspoons crystal or refined sugar\n");
-		}
+		mCocktailPosition = intent.getExtras().getInt(COCKTAIL_DETAILS + ".position");
+		mPicture.setImageResource(intent.getExtras().getInt(COCKTAIL_DETAILS + ".imageId"));
+		mName.setText(intent.getExtras().getString(COCKTAIL_DETAILS + ".name"));
+		mDescription.setText(intent.getExtras().getString(COCKTAIL_DETAILS + ".description"));
+		
 	}
 
 	@Override
@@ -45,8 +46,13 @@ public class CocktailDetails extends Activity {
 	
 	public void finish(View view){
 		Intent cocktail = new Intent();
-		cocktail.putExtra(COCKTAIL_DETAILS_NAME, mName.getText());
+		cocktail.putExtra(COCKTAIL_DETAILS + ".position", mCocktailPosition);
 		setResult(RESULT_OK, cocktail);
+		finish();
+	}
+	
+	public void goBack(View view){
+		setResult(RESULT_CANCELED);
 		finish();
 	}
 

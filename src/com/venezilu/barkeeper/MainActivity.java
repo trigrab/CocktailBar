@@ -7,29 +7,31 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+
 
 public class MainActivity extends Activity {
 
 	public static final int PICK_COCKTAIL_REQUEST = 0;
-	private static final String COCKTAIL_DETAILS_NAME = "com.example.cocktailbar.cocktailName";
+	private static final String COCKTAIL_DETAILS = "com.example.cocktailbar.cocktailDetails";
+	private static final String COCKTAIL_SELECTION = "com.example.cocktailbar.cocktailSelection";
 	private static final int DELETE_COCKTAIL_REQUEST = 1;
 	private ListView mListView;
-	SimpleAdapter mListAdapter;
-	private ArrayAdapter<String> mNameListAdapter;
+	private int mSelectedCocktailPosition = -1;
+	private CocktailAdapter mCocktailAdapter;
+	private int mCocktailCount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		mCocktailCount = 0;
 
 		// Initialize ListView
         mListView = (ListView) findViewById(R.id.cocktailList);         
-        mNameListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        mListView.setAdapter(mNameListAdapter);
+        mCocktailAdapter = new CocktailAdapter(this);
+        mListView.setAdapter(mCocktailAdapter);
         setOnItemClickListener();
          
 	}
@@ -45,33 +47,39 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    // If the request went well (OK) and the request was PICK_COCKTAIL_REQUEST
 	    if (resultCode == Activity.RESULT_OK && requestCode == PICK_COCKTAIL_REQUEST) {
-	        if (data.getExtras().getString("Cocktail") != ""){
-	        	mNameListAdapter.add(data.getExtras().getString("Cocktail"));
-	        	if (mNameListAdapter.getCount() >= mListView.getLastVisiblePosition()) {
+	        Bundle extras = data.getExtras();
+	    	if (extras.getInt(COCKTAIL_SELECTION + ".cocktailId") == -1){
+	        	Cocktail cocktail = new Cocktail(extras.getString(COCKTAIL_SELECTION + ".name"), extras.getString(COCKTAIL_SELECTION + ".description"), extras.getInt(COCKTAIL_SELECTION + ".imageId"), mCocktailCount);
+	        	mCocktailCount++;
+	        	mCocktailAdapter.addCocktail(cocktail);
+	        	if (mCocktailAdapter.getCount() >= mListView.getLastVisiblePosition()) {
 	        		mListView.setScrollbarFadingEnabled(false);
 	        	}
-	        	mNameListAdapter.notifyDataSetChanged();
+	        	mCocktailAdapter.notifyDataSetChanged();
 	        }
 	    }
 	    if (resultCode == Activity.RESULT_OK && requestCode == DELETE_COCKTAIL_REQUEST) {
-	    	String cocktail = data.getExtras().getString(COCKTAIL_DETAILS_NAME);
-	    	if (cocktail != ""){
-	        	if (mNameListAdapter.getPosition(cocktail) != -1){
-	        		mNameListAdapter.remove(cocktail);
-	        		mNameListAdapter.notifyDataSetChanged();
-	        	
-	        		if (mNameListAdapter.getCount() < mListView.getLastVisiblePosition()) {
+	    	int cocktailPosition = data.getExtras().getInt(COCKTAIL_DETAILS + ".position");
+	    	if (cocktailPosition != -1){
+	        	if (mSelectedCocktailPosition != -1){
+	        		mCocktailAdapter.removeCocktail(mSelectedCocktailPosition);
+	        		mSelectedCocktailPosition = -1;
+	        		if (mCocktailAdapter.getCount() < mListView.getLastVisiblePosition()) {
 	        			mListView.setScrollbarFadingEnabled(true);
 	        		}
-	        		mNameListAdapter.notifyDataSetChanged();
+	        		mCocktailAdapter.notifyDataSetChanged();
 	        	}
 	        }
 	    }
 	}
 	
 	public void selectCocktail(View view){
-		Intent selection = new Intent(this, Selection.class);
+		Intent selection = new Intent(this, CocktailSelectionActivity.class);
     	startActivityForResult(selection, PICK_COCKTAIL_REQUEST);
+	}
+	
+	public void showCocktailHistory(View view){
+		return;
 	}
 
 	private void setOnItemClickListener(){
@@ -80,22 +88,22 @@ public class MainActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				startCocktailDetails(mListView.getItemAtPosition(position).toString());
-				
-						
+				startCocktailDetails(position);
 			}
 		});
 	}
 	
-	private void startCocktailDetails(String cocktail){
-		Intent cocktailDetails = new Intent(this, CocktailDetails.class);
-		cocktailDetails.putExtra(COCKTAIL_DETAILS_NAME, cocktail);
+	private void startCocktailDetails(int cocktailPosition){
+		mSelectedCocktailPosition = cocktailPosition;
+		Cocktail cocktail = mCocktailAdapter.getItem(cocktailPosition);
+		Intent cocktailDetails = new Intent(this, CocktailDetailsActivity.class);
+		cocktailDetails.putExtra(COCKTAIL_DETAILS + ".name", cocktail.getName());
+		cocktailDetails.putExtra(COCKTAIL_DETAILS + ".description", cocktail.getDescription());
+		cocktailDetails.putExtra(COCKTAIL_DETAILS + ".imageId", (int) cocktail.getImageUri());
+		cocktailDetails.putExtra(COCKTAIL_DETAILS + ".position", cocktailPosition);
 		startActivityForResult(cocktailDetails, DELETE_COCKTAIL_REQUEST);
 	}
+	
 }
 
 
-/**
-
-}
-**/

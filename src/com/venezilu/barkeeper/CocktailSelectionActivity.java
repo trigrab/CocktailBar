@@ -1,24 +1,23 @@
 package com.venezilu.barkeeper;
 
-import android.os.Bundle;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.support.v4.app.NavUtils;
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.os.Build;
 
-public class Selection extends Activity {
+public class CocktailSelectionActivity extends Activity {
 
+	private static final String COCKTAIL_SELECTION = "com.example.cocktailbar.cocktailSelection";
 	private ListView mListView;
-	private ArrayAdapter<String> mArrayAdapter;
-	private String mSelected = "";
+	private CocktailAdapter mCocktailAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +28,21 @@ public class Selection extends Activity {
 		
 		// Initialize ListView
         mListView = (ListView) findViewById(R.id.selectableCocktails);         
-        mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        mArrayAdapter.add("Caipirinhia");
-        mArrayAdapter.add("Pina Colada");
-        mListView.setAdapter(mArrayAdapter);
+        mCocktailAdapter = new CocktailAdapter(this);
+        
+        mCocktailAdapter.addCocktail(new Cocktail("Caipirinha",
+        							 "50 ml cachaça\n" + "1/2 Lime cut into 4 wedges\n" + "2 teaspoons crystal or refined sugar\n",
+        							 R.drawable.caipirinha, -1));
+        mCocktailAdapter.addCocktail(new Cocktail("Pina Colada",
+        		"30 ml (one part) white rum" + "30 ml (one part) cream of coconut" + "90 ml (3 parts) pineapple juice",
+				 R.drawable.pina_colada, -1));
+        mListView.setAdapter(mCocktailAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				mSelected = mListView.getItemAtPosition(position).toString();
-				select();				
+				select((Cocktail) mListView.getItemAtPosition(position));				
 			}
 		});
         
@@ -79,9 +82,12 @@ public class Selection extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	private void select() {
+	private void select(Cocktail cocktail) {
 		Intent data = new Intent();
-		data.putExtra("Cocktail", mSelected);
+		data.putExtra(COCKTAIL_SELECTION + ".name", cocktail.getName());
+		data.putExtra(COCKTAIL_SELECTION + ".description", cocktail.getDescription());
+		data.putExtra(COCKTAIL_SELECTION + ".imageId", cocktail.getImageUri());
+		data.putExtra(COCKTAIL_SELECTION + ".cocktailId", cocktail.getId());
 		setResult(RESULT_OK, data);
 		finish();
 	}
