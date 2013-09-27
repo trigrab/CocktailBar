@@ -9,14 +9,14 @@
         android:targetSdkVersion="18" />
 
     <application
-        android:screenOrientation="portrait"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.venezilu.barkeeper.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,20 +24,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.cocktailbar.Selection"
-            android:label="@string/title_activity_selection"
-            android:parentActivityName="com.venezilu.barkeeper.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.venezilu.barkeeper.MainActivity" />
-        </activity>
-        <activity
             android:name="com.venezilu.barkeeper.CocktailDetailsActivity"
-            android:label="@string/title_activity_cocktail_details" >
+            android:label="@string/title_activity_cocktail_details"
+            android:parentActivityName="com.venezilu.barkeeper.MainActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.venezilu.barkeeper.CocktailSelectionActivity"
-            android:label="@string/title_activity_selection" >
+            android:parentActivityName="com.venezilu.barkeeper.MainActivity"
+            android:label="@string/title_activity_selection"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.venezilu.barkeeper.CocktailHistoryActivity"
+            android:parentActivityName="com.venezilu.barkeeper.MainActivity"
+            android:label="@string/title_activity_cocktail_history" 
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

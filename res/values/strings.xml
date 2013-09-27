@@ -18,5 +18,7 @@
     <string name="go_back">Go Back</string>
     <string name="there_are_no_cocktails_to_make">There are no Cocktails to make</string>
     <string name="pricture_for_empty_list">pricture for empty list</string>
+    <string name="title_activity_cocktail_history">Cocktail History</string>
+    <string name="cocktailid">CocktailId</string>
 
 </resources>

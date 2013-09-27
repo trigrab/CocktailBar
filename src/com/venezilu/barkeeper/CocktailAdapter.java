@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class CocktailAdapter extends BaseAdapter {
 
-    private List<Cocktail> mData;
+	private List<Cocktail> mData;
     private LayoutInflater mLayoutInflater;
 
     public CocktailAdapter(Context context) {
@@ -23,7 +23,7 @@ public class CocktailAdapter extends BaseAdapter {
     public CocktailAdapter(List<Cocktail> cocktail) {
         mData = cocktail;
     }
-
+    
     public void addCocktail(Cocktail cocktail) {
         mData.add(cocktail);
         notifyDataSetChanged();
@@ -32,6 +32,7 @@ public class CocktailAdapter extends BaseAdapter {
     public boolean removeCocktail(int location){
     	if (mData.get(location) != null) {
     		mData.remove(location);
+    		notifyDataSetChanged();
         	return true;
     	}
     	else {
@@ -58,7 +59,7 @@ public class CocktailAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.text_item, parent, false);
         }
 
         ((TextView) convertView).setText(getItem(position).getName());

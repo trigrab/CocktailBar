@@ -22,7 +22,7 @@ public class CocktailSelectionActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_selection);
+		setContentView(R.layout.activity_cocktail_selection);
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
@@ -34,7 +34,7 @@ public class CocktailSelectionActivity extends Activity {
         							 "50 ml cachaça\n" + "1/2 Lime cut into 4 wedges\n" + "2 teaspoons crystal or refined sugar\n",
         							 R.drawable.caipirinha, -1));
         mCocktailAdapter.addCocktail(new Cocktail("Pina Colada",
-        		"30 ml (one part) white rum" + "30 ml (one part) cream of coconut" + "90 ml (3 parts) pineapple juice",
+        		"30 ml (one part) white rum\n" + "30 ml (one part) cream of coconut\n" + "90 ml (3 parts) pineapple juice\n",
 				 R.drawable.pina_colada, -1));
         mListView.setAdapter(mCocktailAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {

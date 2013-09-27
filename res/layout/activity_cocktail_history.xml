@@ -9,14 +9,14 @@
         android:layout_height="0dp"
         android:layout_weight="1" >
 		<LinearLayout
-			android:id="@+id/cocktailListView"
+			android:id="@+id/cocktailHistoryListView"
 		    android:baselineAligned="false"
         	android:layout_width="fill_parent"
         	android:layout_height="fill_parent"
        		android:orientation="horizontal" >
        		
 			<ListView
-		        android:id="@+id/cocktailList"
+		        android:id="@+id/cocktailHistoryList"
 		        android:layout_width="0dp"
 		        android:layout_height="fill_parent"
 		        android:layout_weight="1" />    	    
@@ -28,7 +28,7 @@
 			         android:layout_alignParentStart="true" />
 			
 			<RelativeLayout
-		        android:id="@+id/cocktailDetails"
+		        android:id="@+id/cocktailHistoryDetails"
 		        android:layout_width="0dp"
 		        android:layout_height="fill_parent"
 		        android:layout_weight="1" 
@@ -39,7 +39,7 @@
 		        >
 
 			    <ImageView
-			         android:id="@+id/cocktailLogo"
+			         android:id="@+id/cocktailHistoryLogo"
 			         android:layout_width="256dp"
 			         android:layout_height="256dp"
 			         android:layout_centerHorizontal="true"
@@ -47,19 +47,26 @@
 			         android:src="@drawable/vodka_martini" />
 			    		        
 			    <TextView
-			         android:id="@+id/cocktailName"
+			         android:id="@+id/cocktailHistoryName"
 			         android:layout_width="wrap_content"
 			         android:layout_height="wrap_content"
-			         android:layout_below="@+id/cocktailLogo"
+			         android:layout_below="@+id/cocktailHistoryLogo"
 			         android:text="@string/name"
 			         android:textAppearance="?android:attr/textAppearanceLarge" />
 			
 			     <TextView
-			         android:id="@+id/cocktailDescription"
+			         android:id="@+id/cocktailHistoryDescription"
 			         android:layout_width="wrap_content"
 			         android:layout_height="wrap_content"
-			         android:layout_below="@+id/cocktailName"
+			         android:layout_below="@+id/cocktailHistoryName"
 			         android:text="@string/cocktail_description" />
+			     
+			     <TextView
+			         android:id="@+id/cocktailHistoryId"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+			         android:layout_below="@+id/cocktailHistoryDescription"
+			         android:text="@string/cocktailid" />
 			     
 			     <LinearLayout
 			        style="@android:style/ButtonBar"
@@ -73,7 +80,7 @@
 			            android:layout_height="fill_parent"
 			            android:layout_gravity="center_vertical"
 			            android:layout_weight="1"
-			            android:onClick="finishCocktail"
+			            android:onClick="setCocktailUnfinished"
 			            android:text="@string/cocktail_finished" />
 			    </LinearLayout>
 			     
@@ -81,41 +88,12 @@
 		
     	</LinearLayout>
 
-	        
-    	
-    
         <ViewStub
-            android:id="@+id/empty"
+            android:id="@+id/emptyHistory"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
             android:layout="@layout/empty" />
     </FrameLayout>
-    
-    
-
-
-    <LinearLayout
-        style="@android:style/ButtonBar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:onClick="selectCocktail"
-            android:text="@string/select_cocktail" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:onClick="showCocktailHistory"
-            android:text="@string/cocktail_history" />
-    </LinearLayout>
 
 </LinearLayout>
